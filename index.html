@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risab's Mcpe Projects</title>
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&family=Roboto+Slab:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling with live gradient animation */
+        body {
+            font-family: 'Roboto Slab', serif;
+            background: linear-gradient(90deg, #1e3c72, #2a5298, #71b7e6, #9abcfb);
+            background-size: 600% 600%;
+            animation: gradientBG 12s ease infinite;
+            color: white;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Live background animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Falling stars */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Header Styling */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 50px;
+            text-decoration: underline;
+            color: #ffd700; /* Golden text color */
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 223, 0, 0.8), 0 0 30px rgba(255, 223, 0, 0.6);
+            z-index: 2;
+        }
+
+        /* Paragraph Styling */
+        p {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 20px;
+            max-width: 800px;
+            font-weight: 300;
+            line-height: 1.7;
+            color: #ffffff;
+            z-index: 2;
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Section Styling */
+        .section {
+            width: 90%;
+            max-width: 1000px;
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3), 0 12px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            z-index: 2;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        .section p {
+            font-size: 1.3rem;
+            color: white;
+            font-weight: 400;
+        }
+
+        /* Stylish Section Links */
+        .section-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 12px 25px;
+            border-radius: 50px;
+            background: linear-gradient(90deg, #ff6f61, #d72631);
+            transition: all 0.4s ease;
+        }
+
+        .section-link:hover {
+            background: linear-gradient(90deg, #d72631, #ff6f61);
+            color: black;
+            box-shadow: 0 4px 10px rgba(215, 38, 49, 0.6), 0 6px 15px rgba(255, 111, 97, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas for Falling Stars -->
+    <canvas id="fallingStars"></canvas>
+
+    <!-- Heading -->
+    <h1>Cat's Mcpe Projects</h1>
+
+    <!-- Welcome message -->
+    <p>Welcome to Mcpe Projects made by me. Here you will find many different types.</p>
+
+    <!-- Section links -->
+    <!-- JavaScript for Falling Stars -->
+    <script>
+        const canvas = document.getElementById('fallingStars');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = [];
+        const starCount = 50;
+
+        class Star {
+            constructor(x, y, size, speed) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.speed = speed;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) {
+                    this.y = 0 - this.size;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+        }
+
+        function createStars() {
+            for (let i = 0; i < starCount; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const size = Math.random() * 2 + 1;
+                const speed = Math.random() * 2 + 1;
+                stars.push(new Star(x, y, size, speed));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        createStars();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars.length = 0;
+            createStars();
+        });
+    </script>
+</body>
+</html>
